@@ -48,9 +48,18 @@
               <td>{{course}}</td>
               <td>{{code}}</td>
                <td>
+                {{#isAdmin}}
+                <a href="/api/v1/courses/{{id}}/delete">
+                <button> Delete</button>
+                </a>
+                {{/isAdmin}}
+
+                {{#isStudent}}
                 <a href="/api/v1/courses/{{id}}/drop">
                 <button> Drop</button>
                 </a>
+                {{/isStudent}}
+                
                 
             </tr>
           {{/courses}}

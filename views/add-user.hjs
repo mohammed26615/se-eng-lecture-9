@@ -49,8 +49,9 @@
         </ul>
   </nav>
   </div>
+    <h3 style="color: red;">{{errorMessage}}</h3>
     <br/>
-    <form class="form-horizontal" style="width: 50%;">
+    <form class="form-horizontal" style="width: 50%;" action="/api/v1/adminAddUser" method="post">
       <div class="form-group">
           <label for="firstName" class="col-sm-2 control-label">First Name</label>
           <div class="col-sm-10">
@@ -63,15 +64,40 @@
               <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name" value="">
           </div>
       </div>
-      <div class="form-group">
-          <label for="email" class="col-sm-2 control-label">Major</label>
+       <div class="form-group">
+          <label for="email" class="col-sm-2 control-label">Email</label>
           <div class="col-sm-10">
-              <input type="major" class="form-control" id="major" name="major" placeholder="Computer Science" value="">
+              <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="">
           </div>
-      </div>  
+      </div>
+      <div class="form-group">
+          <label for="password" class="col-sm-2 control-label">Password</label>
+          <div class="col-sm-10">
+              <input type="password" class="form-control" id="password" name="password" placeholder="password" value="">
+          </div>
+      </div>
+      <div class="form-group">
+          <label for="faculty" class="col-sm-2 control-label">Faculty</label>
+          <select name="facultyId" id="facultyId">
+            <option value=""></option>
+            {{#faculties}}
+                <option value="{{id}}">{{faculty}}</option>
+            {{/faculties}}   
+        </select>
+      </div>
+      <div class="form-group">
+          <label for="role" class="col-sm-2 control-label">Role</label>
+          <div class="col-sm-10">
+            <select name="roleId" id="roleId">
+                <option value=""></option>
+                <option value="1">student</option>
+                <option value="2">admin</option>
+            </select>         
+          </div>
+      </div>
       <div class="form-group">
           <div class="col-sm-10 col-sm-offset-2">
-              <input id="submit" name="submit" type="button" value="Send" class="btn btn-primary">
+              <input id="submit" name="submit" type="submit" value="Send" class="btn btn-primary">
           </div>
       </div>
   </form>

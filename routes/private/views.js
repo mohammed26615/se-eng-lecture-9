@@ -32,16 +32,24 @@ module.exports = function(app) {
 
   // Register HTTP endpoint to render /users page
   app.get('/users', async function(req, res) {
-    const users = await db.select('*').from('se_project.users');
-    return res.render('users', { users });
+    const users = await db.select(db.ref('id').withSchema('users'), 'firstName', 'lastName', 'faculty', 'role').from('se_project.users')
+    .innerJoin('se_project.faculties', 'se_project.users.facultyId', 'se_project.faculties.id')
+    .innerJoin('se_project.roles', 'se_project.users.roleId', 'se_project.roles.id');
+    const user = await getUser(req);
+    return res.render('users', { ...user, users });
   });
 
   // Register HTTP endpoint to render /courses page
   app.get('/courses', async function(req, res) {
     const user = await getUser(req);
-    const courses = await db.select('*').from('se_project.enrollments')
-    .where('userId', user.id)
-    .innerJoin('se_project.courses', 'se_project.enrollments.courseId', 'se_project.courses.id');
+    if (user.isStudent){
+      const courses = await db.select('*').from('se_project.enrollments')
+      .where('userId', user.id)
+      .innerJoin('se_project.courses', 'se_project.enrollments.courseId', 'se_project.courses.id');
+      return res.render('courses', { ...user, courses });
+    }
+
+    const courses = await db.select('*').from('se_project.courses');
 
     return res.render('courses', { ...user, courses });
   });
@@ -62,10 +70,13 @@ module.exports = function(app) {
 
   // Register HTTP endpoint to render /users/add page
   app.get('/users/add', async function(req, res) {
-    const users = await getUser(req);
-    if(user.isAdmin) {
+    const user = await getUser(req);
+    if(!user.isAdmin) {
       return res.status(301).redirect('/dashboard'); 
     }
-    return res.render('add-user');
+    const faculties = await db.select('*').from('se_project.faculties');
+    return res.render('add-user', { faculties });
   });
+
+  
 };
