@@ -22,9 +22,15 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="/dashboard">Home</a></li>
             <li><a href="/courses">Courses</a></li>
+            {{#isAdmin}}
             <li><a href="/users">Users</a></li>
+            {{/isAdmin}}
+            {{#isAdmin}}
             <li><a href="/users/add">Add Users</a></li>
-            <li><a href="/enrollment">Enrollment</a></li>
+            {{/isAdmin}}
+            {{#isStudent}}
+            <li><a href="/enrollment">Transcript</a></li>
+            {{/isStudent}}
             <li><a href="/">Logout</a></li>
           </ul>
        </nav>

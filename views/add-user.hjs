@@ -42,7 +42,9 @@
         <li><a href="/courses">Courses</a></li>
         <li><a href="/users">Users</a></li>
         <li class="active"><a href="/users/add">Add Users</a></li>
+        {{#isstudent}}
         <li><a href="/enrollment">Enrollment</a></li>
+        {{/isstudent}}
         <li><a href="/">Logout</a></li>  
         </ul>
   </nav>

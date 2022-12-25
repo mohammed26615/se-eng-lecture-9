@@ -14,9 +14,15 @@
       <ul class="nav navbar-nav">
         <li><a href="/dashboard">Home</a></li>
         <li><a href="/courses">Courses</a></li>
+        {{#isAdmin}}
         <li><a href="/users">Users</a></li>
+        {{/isAdmin}}
+        {{#isAdmin}}
         <li><a href="/users/add">Add Users</a></li>
-        <li class="active"><a href="/enrollment">Enrollment</a></li>
+        {{/isAdmin}}
+        {{#isStudent}}
+        <li><a href="/enrollment">Transcript</a></li>
+        {{/isStudent}}
         <li><a href="/">Logout</a></li>            
       </ul>
   </nav>
@@ -31,15 +37,17 @@
             <th scope="col">Last Name</th>
             <th scope="col">Major</th>
             <th scope="col">Grade</th>
+            
           </tr>
           {{#enrollment}}
             <tr>
               <td>{{code}}</td>
-              <td>{{name}}</td>
+              <td>{{course}}</td>
               <td>{{firstName}}</td>
               <td>{{lastName}}</td>
-              <td>{{major}}</td>
+              <td>{{faculty}}</td>
               <td>{{grade}}</td>
+             
             </tr>
           {{/enrollment}}
         </thead>

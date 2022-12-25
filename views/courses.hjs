@@ -14,9 +14,15 @@
       <ul class="nav navbar-nav">
         <li><a href="/dashboard">Home</a></li>
         <li class="active"><a href="/courses">Courses</a></li>
+        {{#isAdmin}}
         <li><a href="/users">Users</a></li>
+        {{/isAdmin}}
+        {{#isAdmin}}
         <li><a href="/users/add">Add Users</a></li>
-        <li><a href="/enrollment">Enrollment</a></li>
+        {{/isAdmin}}
+        {{#isStudent}}
+        <li><a href="/enrollment">Transcript</a></li>
+        {{/isStudent}}
         <li><a href="/">Logout</a></li>       
       </ul>
   </nav>
@@ -34,12 +40,18 @@
             <th scope="col">id</th>
             <th scope="col">course</th>
             <th scope="col">code</th>
+            <th scope="col">status</th>
           </tr>
           {{#courses}}
             <tr>
               <td>{{id}}</td>
               <td>{{course}}</td>
               <td>{{code}}</td>
+               <td>
+                <a href="/api/v1/courses/{{id}}/drop">
+                <button> Drop</button>
+                </a>
+                
             </tr>
           {{/courses}}
         </thead>
