@@ -45,7 +45,8 @@ module.exports = function(app) {
     if (user.isStudent){
       const courses = await db.select('*').from('se_project.enrollments')
       .where('userId', user.id)
-      .innerJoin('se_project.courses', 'se_project.enrollments.courseId', 'se_project.courses.id');
+      .innerJoin('se_project.courses', 'se_project.enrollments.courseId', 'se_project.courses.id')
+      .innerJoin('se_project.faculties', 'se_project.courses.facultyId', 'se_project.faculties.id');;
       return res.render('courses', { ...user, courses });
     }
 

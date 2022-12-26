@@ -28,18 +28,14 @@
   </nav>
   </div>
     <br/>
-      {{#isAdmin}}
-      <div style="position:absolute; right:0;">
-        <input id="btnAddCourse" type="button" value="Add Course" class="btn btn-primary">
-        <br />
-      </div>
-      {{/isAdmin}}
+      
       <table class="table">
         <thead>
           <tr>
             <th scope="col">id</th>
             <th scope="col">course</th>
             <th scope="col">code</th>
+            <th scope="col">Major</th>
             <th scope="col">status</th>
           </tr>
           {{#courses}}
@@ -47,6 +43,7 @@
               <td>{{id}}</td>
               <td>{{course}}</td>
               <td>{{code}}</td>
+              <td>{{faculty}}</td>
                <td>
                 {{#isAdmin}}
                 <a href="/api/v1/courses/{{id}}/delete">
