@@ -36,6 +36,7 @@
             <th scope="col">course</th>
             <th scope="col">code</th>
             <th scope="col">Major</th>
+            <th scope="col">credit hourse</th>
             <th scope="col">status</th>
           </tr>
           {{#courses}}
@@ -44,6 +45,7 @@
               <td>{{course}}</td>
               <td>{{code}}</td>
               <td>{{faculty}}</td>
+              <td>{{Credit Hours}}</td>
                <td>
                 {{#isAdmin}}
                 <a href="/api/v1/courses/{{id}}/delete">
