@@ -16,19 +16,33 @@
         <li class="active"><a href="/courses">Courses</a></li>
         {{#isAdmin}}
         <li><a href="/users">Users</a></li>
-        {{/isAdmin}}
-        {{#isAdmin}}
+       <li><a href="/mangeGrades">mange grades</a></li>
+        <li><a href="/managerequest">Mange Transefer</a></li>
         <li><a href="/users/add">Add Users</a></li>
         {{/isAdmin}}
+         
         {{#isStudent}}
+        <li><a href="/Transferrequest">Transefer Request</a></li>
         <li><a href="/enrollment">Transcript</a></li>
         {{/isStudent}}
         <li><a href="/">Logout</a></li>       
       </ul>
   </nav>
   </div>
+  {{#isAdmin}}
+    <div class="form-group" style="margin-left: 10px;">
+        <label for="faculty" class="control-label">Faculty</label>
+        <select name="facultyId" id="facultyId">
+          <option value="" ></option>
+          {{#faculties}}
+              <option value="{{faculty}}" >{{faculty}}</option>
+          {{/faculties}}   
+        </select>
+      <button onclick="Filter()" class="btn btn-primary">Filter</button>
+    </div>
+    {{/isAdmin}}
     <br/>
-      
+
       <table class="table">
         <thead>
           <tr>
@@ -39,6 +53,8 @@
             <th scope="col">credit hourse</th>
             <th scope="col">status</th>
           </tr>
+          </thead>
+          <tbody id="courses-list">
           {{#courses}}
             <tr>
               <td>{{id}}</td>
@@ -49,21 +65,57 @@
                <td>
                 {{#isAdmin}}
                 <a href="/api/v1/courses/{{id}}/delete">
-                <button> Delete</button>
+                <button class="btn btn-danger"> Delete</button>
                 </a>
                 {{/isAdmin}}
 
                 {{#isStudent}}
                 <a href="/api/v1/courses/{{id}}/drop">
-                <button> Drop</button>
+                <button style="background-color: red; color: white;"> Drop</button>
                 </a>
                 {{/isStudent}}
-                
-                
             </tr>
           {{/courses}}
-        </thead>
+         </tbody>
       </table>
     </div>
+  <script>
+    const coursesList = [
+      {{#courses}}
+        {
+        id: {{id}},
+        course: '{{course}}',
+        code: '{{code}}',
+        faculty: '{{faculty}}',
+        Credit_Hours:{{Credit Hours}}
+        },
+      {{/courses}}
+    ];
+
+    function Filter(){
+      let e = document.getElementById("facultyId");
+      var faculty = e.options[e.selectedIndex].value;
+      let tableBody = document.getElementById("courses-list");
+      tableBody.innerHTML = "";
+      let filteredList = coursesList.filter((c) => c.faculty == faculty);
+      let newList = "";
+      filteredList.forEach((c) =>{
+        newList += `<tr>
+              <td>${c.id}</td>
+              <td>${c.course}</td>
+              <td>${c.code}</td>
+              <td>${c.faculty}</td>
+              <td>${c.Credit_Hours}</td>
+              <td>
+                <a href="/api/v1/courses/${c.id}/delete">
+                  <button class="btn btn-danger"> Delete</button>
+                </a>
+              </tr>
+            `
+      });
+      tableBody.innerHTML = newList;
+    }
+    //console.log(coursesList);
+  </script>
   </body>
   </html>

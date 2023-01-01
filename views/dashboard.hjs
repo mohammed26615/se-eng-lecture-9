@@ -11,31 +11,34 @@
       <script>
       $(document).ready(function() {
         const sessionToken = document.cookie.includes('session_token');
-        if (!sessionToken) {
+         if (!sessionToken) {
           location.href = '/';
-        }
-      });
-      </script> 
-    <div>
-      <div>
-        <nav class="navbar navbar-inverse" style="padding-left:130px;">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="/dashboard">Home</a></li>
-            <li><a href="/courses">Courses</a></li>
-            {{#isAdmin}}
-            <li><a href="/users">Users</a></li>
-            {{/isAdmin}}
-            {{#isAdmin}}
-            <li><a href="/users/add">Add Users</a></li>
-            {{/isAdmin}}
-            {{#isStudent}}
-            <li><a href="/enrollment">Transcript</a></li>
-            {{/isStudent}}
-            <li><a href="/">Logout</a></li>
-          </ul>
+         }
+         });
+          </script> 
+          <div>
+         <div>
+         <nav class="navbar navbar-inverse" style="padding-left:130px;">
+         <ul class="nav navbar-nav">
+         <li><a href="/dashboard">Home</a></li>
+         <li class="active"><a href="/courses">Courses</a></li>
+         {{#isAdmin}}
+         <li><a href="/users">Users</a></li>
+         <li><a href="/mangeGrades">Mange Grades</a></li>
+         <li><a href="/managerequest">Mange Transefer</a></li>
+         <li><a href="/users/add">Add Users</a></li>
+         {{/isAdmin}}
+         
+         {{#isStudent}}
+         <li><a href="/Transferrequest">Transefer Request</a></li>
+         <li><a href="/enrollment">Transcript</a></li>
+         {{/isStudent}}
+          <li><a href="/">Logout</a></li>       
+        </ul>
        </nav>
       </div>
       <p>Welcome {{firstName}}, you are logged in!</p>
     </div>
   </body>
   </html>
+

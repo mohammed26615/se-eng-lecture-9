@@ -41,6 +41,8 @@
         <li><a href="/dashboard">Home</a></li>
         <li><a href="/courses">Courses</a></li>
         <li><a href="/users">Users</a></li>
+       <li><a href="/mangeGrades">mange grades</a></li>
+       <li><a href="/managerequest">Mange Transefer</a></li>
         <li class="active"><a href="/users/add">Add Users</a></li>
         {{#isstudent}}
         <li><a href="/enrollment">Enrollment</a></li>

@@ -16,6 +16,7 @@ const getUser = async function(req) {
     .innerJoin('se_project.users', 'se_project.sessions.userId', 'se_project.users.id')
     .innerJoin('se_project.roles', 'se_project.users.roleId', 'se_project.roles.id')
     .innerJoin('se_project.faculties', 'se_project.users.facultyId', 'se_project.faculties.id')
+
     .first();
   
   console.log('user =>', user)
@@ -75,4 +76,46 @@ module.exports = function(app) {
     }
   });
 
+  app.post('/api/v1/add-grade/:enrollment_id', async function (req ,res){
+ var e_id = Number(req.params.enrollment_id);
+    var grade = Number(req.body.grade);
+    var grade_letter = GetGradeLetter(grade);
+    await db('se_project.enrollments')
+    .where({enrollment_id: e_id})
+    .update({
+      grade: grade,
+      grade_letter: grade_letter
+    });
+    return res.status(301).redirect('/mangeGrades');
+  });
+
+  function GetGradeLetter(grade){
+    if (grade <49.9) return "F";
+        else if (grade < 54.9) return "D";
+        else if (grade < 59.9) return "D+";
+        else if (grade < 64.9) return "C-";
+        else if (grade < 69.9) return "C";
+        else if (grade < 73.9) return "C+";
+        else if (grade < 77.9) return "B-";
+        else if (grade < 81.9) return "B";
+        else if (grade < 85.9) return "B+";
+        else if (grade < 89.9) return "A-";
+        else if (grade < 93.9) return "A";
+        else if (grade < 100) return "A+";
+  }
+  app.post('/api/v1/faculties/transfer', async function(req, res) {
+     
+    try {
+     const user= await getUser(req);
+     const newrequest = {
+       userId:user.userId,
+     currentFacultyId : user.facultyId ,
+      newFacultyId:req.body.newFacultyId,
+      };
+      const a = await db('se_project.Transfer_requests').insert(newrequest).returning('*');
+      return res.status(200).json(a);
+    } catch (e) {
+      console.log(e.message);
+      return res.status(400).send('Could not submit request');
+ }});
 };
