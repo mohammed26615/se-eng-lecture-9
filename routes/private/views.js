@@ -44,9 +44,10 @@ module.exports = function(app) {
     const user = await getUser(req);
     if (user.isStudent){
       const courses = await db.select('*').from('se_project.enrollments')
-      .where('userId', user.id)
+      .where('userId', user.userId)
       .innerJoin('se_project.courses', 'se_project.enrollments.courseId', 'se_project.courses.id')
       .innerJoin('se_project.faculties', 'se_project.courses.facultyId', 'se_project.faculties.id');
+      console.log(courses);
       return res.render('courses', { ...user, courses });
     }
 
@@ -68,10 +69,19 @@ module.exports = function(app) {
     .innerJoin('se_project.users', 'se_project.enrollments.userId', 'se_project.users.id')
     .innerJoin('se_project.courses', 'se_project.enrollments.courseId', 'se_project.courses.id')
     .innerJoin('se_project.faculties', 'se_project.users.facultyId', 'se_project.faculties.id');
-    console.log(enrollment);
-    return res.render('enrollment', { ...user, enrollment });
+
+    // let sum = 0;
+    // enrollment.array.forEach(element => {
+    //   sum += element.grade;
+    // });
+    let gpa = computeGPA(sum);
+    //console.log(enrollment);
+    return res.render('enrollment', { ...user, enrollment, gpa});
   });
 
+  function computeGPA(grades){
+    return .7;
+  }
   // Register HTTP endpoint to render /users/add page
   app.get('/users/add', async function(req, res) {
     const user = await getUser(req);
@@ -94,7 +104,7 @@ module.exports = function(app) {
   
   
   app.get('/managerequest', async function(req, res) {
-    const Transfer = await db.select('*')
+    const Transfer = await db.select(db.ref('id').withSchema('Transfer_requests'), 'firstName', 'lastName', 'faculty', 'newFacultyId', 'status')
       .from('se_project.Transfer_requests')
       .where('status', "pending")
       .innerJoin('se_project.faculties', 'se_project.Transfer_requests.currentFacultyId','se_project.faculties.id')

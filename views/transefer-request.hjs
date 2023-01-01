@@ -48,8 +48,8 @@
          <nav class="navbar navbar-inverse" style="padding-left:130px;">
          <ul class="nav navbar-nav">
          <li><a href="/dashboard">Home</a></li>
-         <li class="active"><a href="/courses">Courses</a></li>
-         <li><a href="/Transferrequest">Transefer Request</a></li>
+         <li ><a href="/courses">Courses</a></li>
+         <li class="active"><a href="/Transferrequest">Transefer Request</a></li>
          <li><a href="/enrollment">Transcript</a></li>
           <li><a href="/">Logout</a></li>       
         </ul>

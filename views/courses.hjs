@@ -16,7 +16,7 @@
         <li class="active"><a href="/courses">Courses</a></li>
         {{#isAdmin}}
         <li><a href="/users">Users</a></li>
-       <li><a href="/mangeGrades">mange grades</a></li>
+       <li><a href="/mangeGrades">Mange Grades</a></li>
         <li><a href="/managerequest">Mange Transefer</a></li>
         <li><a href="/users/add">Add Users</a></li>
         {{/isAdmin}}

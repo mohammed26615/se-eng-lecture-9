@@ -13,9 +13,9 @@
     <nav class="navbar navbar-inverse" style="padding-left:130px;">
       <ul class="nav navbar-nav">
         <li><a href="/dashboard">Home</a></li>
-        <li class="active"><a href="/courses">Courses</a></li>
+        <li><a href="/courses">Courses</a></li>
         {{#isAdmin}}
-        <li><a href="/users">Users</a></li>
+        <li class="active"><a href="/users">Users</a></li>
        <li><a href="/mangeGrades">Mange Grades</a></li>
         <li><a href="/managerequest">Mange Transefer</a></li>
         <li><a href="/users/add">Add Users</a></li>

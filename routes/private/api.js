@@ -67,7 +67,9 @@ module.exports = function(app) {
     //console.log(req.body);
     console.log(newUser);
     try {
-      const user = await db('se_project.users').insert(newUser).returning('*');
+      const result = await db('se_project.users').insert(newUser).returning('*');
+      let user = result[0];
+      await AddRelatedCourses(user.id, Number(user.facultyId));
       return res.status(301).redirect('/users');
     } catch (e) {
       console.log(e.message);
@@ -75,6 +77,20 @@ module.exports = function(app) {
       return res.render('add-user', { faculties, errorMessage: "error adding new user" });
     }
   });
+
+const AddRelatedCourses = async(userId, facultyId) => {
+    var relatedCourses = await db.select('id').from('se_project.courses')
+    .where('facultyId', facultyId);
+    for(let i = 0; i < relatedCourses.length; i++){
+      const newEnrol = {
+        userId: userId,
+        courseId: relatedCourses[i].id,
+        grade: 0,
+        active: true
+      };
+      await db('se_project.enrollments').insert(newEnrol).returning('*');
+    }
+  };
 
   app.post('/api/v1/add-grade/:enrollment_id', async function (req ,res){
  var e_id = Number(req.params.enrollment_id);
@@ -103,6 +119,7 @@ module.exports = function(app) {
         else if (grade < 93.9) return "A";
         else if (grade < 100) return "A+";
   }
+  
   app.post('/api/v1/faculties/transfer', async function(req, res) {
      
     try {
@@ -118,4 +135,38 @@ module.exports = function(app) {
       console.log(e.message);
       return res.status(400).send('Could not submit request');
  }});
+
+app.get('/api/v1/transfer/:request_id/accept', async function (req ,res){
+  var requestId = req.params.request_id;
+  const request = await  db.select('*')
+  .from('se_project.Transfer_requests')
+  .where('id', requestId).first();
+
+  await db('se_project.users')
+    .where({id: request.userId})
+    .update({
+      facultyId: Number(request.newFacultyId)
+    });
+
+  // delete the request
+  await db.select('*')
+  .from('se_project.Transfer_requests')
+  .where('id', requestId).del();
+
+
+  // add the new courses
+  await AddRelatedCourses(request.userId, Number(request.newFacultyId));
+  return res.status(301).redirect('/courses');
+});
+
+// const DeleteOldEnrol = async
+
+app.get('/api/v1/transfer/:request_id/reject', async function (req ,res){
+  var requestId = req.params.request_id;
+  await db.select('*')
+  .from('se_project.Transfer_requests')
+  .where('id', requestId).del();
+  return res.status(301).redirect('/managerequest');
+});
+
 };
