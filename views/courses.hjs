@@ -52,6 +52,9 @@
             <th scope="col">Major</th>
             <th scope="col">credit hourse</th>
             <th scope="col">status</th>
+             {{#isAdmin}}
+            <th scope="col">Update</th>
+             {{/isAdmin}}
           </tr>
           </thead>
           <tbody id="courses-list">
@@ -61,14 +64,20 @@
               <td>{{course}}</td>
               <td>{{code}}</td>
               <td>{{faculty}}</td>
-              <td>{{Credit Hours}}</td>
+              <td>{{CreditHours}}</td>
                <td>
                 {{#isAdmin}}
                 <a href="/api/v1/courses/{{id}}/delete">
                 <button class="btn btn-danger"> Delete</button>
                 </a>
                 {{/isAdmin}}
-
+                <td>
+                {{#isAdmin}}
+                <a href="/api/v1/courses/{{id}}/update">
+                <button class="btn btn-primary"> Update</button>
+                </a>
+                {{/isAdmin}}
+                
                 {{#isStudent}}
                 <a href="/api/v1/courses/{{id}}/drop">
                 <button style="background-color: red; color: white;"> Drop</button>
@@ -87,7 +96,7 @@
         course: '{{course}}',
         code: '{{code}}',
         faculty: '{{faculty}}',
-        Credit_Hours:{{Credit Hours}}
+        Credit_Hours:{{CreditHours}}
         },
       {{/courses}}
     ];
@@ -105,7 +114,7 @@
               <td>${c.course}</td>
               <td>${c.code}</td>
               <td>${c.faculty}</td>
-              <td>${c.Credit_Hours}</td>
+              <td>${c.CreditHours}</td>
               <td>
                 <a href="/api/v1/courses/${c.id}/delete">
                   <button class="btn btn-danger"> Delete</button>
@@ -115,7 +124,6 @@
       });
       tableBody.innerHTML = newList;
     }
-    //console.log(coursesList);
   </script>
   </body>
   </html>

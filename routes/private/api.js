@@ -64,7 +64,6 @@ module.exports = function(app) {
       facultyId: req.body.facultyId,
       roleId: req.body.roleId,
     };
-    //console.log(req.body);
     console.log(newUser);
     try {
       const result = await db('se_project.users').insert(newUser).returning('*');
@@ -168,5 +167,26 @@ app.get('/api/v1/transfer/:request_id/reject', async function (req ,res){
   .where('id', requestId).del();
   return res.status(301).redirect('/managerequest');
 });
-
+// app.post('/api/v1/courses/:courseId/update', async function(req, res) {
+//   // Check if user already exists in the system
+//   const userExists = await db.select('*').from('se_project.courses').where('code', req.body.code);
+//   if (!isEmpty(userExists)) {
+//     return res.status(400).send('cours is found');
+//   }
+  
+//   const newcourse = {
+//     course: req.body.course,
+//     code: req.body.code,
+//     facultyId: req.body.facultyId,
+//     CreditHours: req.body.CreditHours,
+//   };
+//   try {
+//     const result = await db('se_project.courses').insert(newcourse).returning('*');
+//     return res.status(301).redirect('/courses');
+//   } catch (e) {
+//     console.log(e.message);
+//     const faculties = await db.select('*').from('se_project.faculties');
+//     return res.render('courses', { faculties, errorMessage: "error adding updating course" });
+//   }
+// });
 };

@@ -34,25 +34,26 @@
           <tr>
             <th scope="col">Course Code</th>
             <th scope="col">Course Name</th>
-            <th scope="col">First Name</th>
+            {{!-- <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
-            <th scope="col">Major</th>
+            <th scope="col">Major</th> --}}
             <th scope="col">Grade</th>
             
           </tr>
-          {{#enrollment}}
+          {{#courses}}
             <tr>
               <td>{{code}}</td>
               <td>{{course}}</td>
-              <td>{{firstName}}</td>
-              <td>{{lastName}}</td>
-              <td>{{faculty}}</td>
-              <td>{{grade}}</td>
+              <td>{{grade_letter}}</td>
              
             </tr>
-          {{/enrollment}}
+          {{/courses}}
         </thead>
       </table>
     </div>
+    
+     <h2 class "center">GPA: {{finalGPA}}</h2>
+    
+
   </body>
   </html>

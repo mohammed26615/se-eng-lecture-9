@@ -36,9 +36,12 @@
           <li><a href="/">Logout</a></li>       
         </ul>
        </nav>
-      </div>
-      <p>Welcome {{firstName}}, you are logged in!</p>
-    </div>
+      <div class="alert alert-success" role="alert">
+  <h2 class="alert-heading">{{firstName}}</h2>
+  <p>Learn as if you will live forever, live like you will die tomorrow.</p>
+  <hr>
+  <p class="mb-0">always smile :)</p>
+</div>
   </body>
   </html>
 

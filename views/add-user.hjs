@@ -90,7 +90,7 @@
       <div class="form-group">
           <label for="role" class="col-sm-2 control-label">Role</label>
           <div class="col-sm-10">
-            <select name="roleId" id="roleId">
+            <select type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <option value=""></option>
                 <option value="1">student</option>
                 <option value="2">admin</option>
