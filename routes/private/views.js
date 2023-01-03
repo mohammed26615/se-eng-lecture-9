@@ -83,8 +83,8 @@ module.exports = function(app) {
       var z=0;
       var y=0;
       for(let i = 0; i < courses.length; i++){
-        let  grade = courses.grade;
-        let CreditHours= courses.CreditHours;
+        let  grade = courses[i].grade;
+        let CreditHours= courses[i].CreditHours;
         if (grade <49.9) x=5.0;
         else if (grade < 54.9) x=4.0;
         else if (grade < 59.9) x=3.7;
@@ -99,11 +99,9 @@ module.exports = function(app) {
         else if (grade < 100) x=0.7;
         y=x*courses[i].CreditHours;
         z=z+y
-        totalCreditHours += courses[i].CreditHours;
-        console.log(grade);  
+        totalCreditHours += courses[i].CreditHours; 
       }
       var finalGPA = (z/totalCreditHours);
-      //console.log(finalGPA);
     return res.render('enrollment', { ...user, enrollment ,courses, finalGPA, appear});
   });
   // Register HTTP endpoint to render /users/add page
